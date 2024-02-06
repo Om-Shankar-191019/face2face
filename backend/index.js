@@ -4,11 +4,17 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();
 
+// routes imports
+import authRoutes from "./routes/auth.routes.js";
+
 const app = express();
+const port = process.env.PORT || 8000;
 
 // middlewares
 app.use(express.json());
-const port = process.env.PORT || 8000;
+
+// routes
+app.use("/api/auth", authRoutes);
 
 const start = async () => {
   try {
