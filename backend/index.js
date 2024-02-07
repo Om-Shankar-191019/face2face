@@ -3,19 +3,23 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();
-import "express-async-errors";
+import cookieParser from "cookie-parser";
 // routes imports
 import authRoutes from "./routes/auth.routes.js";
 import errorHandler from "./middleware/errorHandler.js";
+import protectRoute from "./middleware/protectRoute.js";
 
 const app = express();
 const port = process.env.PORT || 8000;
 
 // middlewares
 app.use(express.json());
-
+app.use(cookieParser());
 // routes
 app.use("/api/auth", authRoutes);
+app.get("/api/test", protectRoute, (req, res) => {
+  res.json({ msg: req.user });
+});
 app.use(errorHandler);
 
 const start = async () => {
