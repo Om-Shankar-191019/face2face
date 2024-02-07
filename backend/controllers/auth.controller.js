@@ -14,6 +14,7 @@ export const signup = async (req, res, next) => {
       gender,
       profilePic,
     } = req.body;
+
     const user = await User.findOne({ email });
     if (user) {
       throw new Error("User already exist.");
@@ -25,13 +26,19 @@ export const signup = async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
+    // https://avatar-placeholder.iran.liara.run/
+
+    const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
+    const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
+
+    const randomPic = gender === "male" ? boyProfilePic : girlProfilePic;
     const newUser = await User.create({
       fullName,
       username,
       email,
       password: hashPassword,
       gender,
-      profilePic,
+      profilePic: !profilePic ? randomPic : profilePic,
     });
 
     if (newUser) {
