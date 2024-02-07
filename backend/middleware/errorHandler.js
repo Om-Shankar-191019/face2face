@@ -1,15 +1,15 @@
 const errorHandler = async (err, req, res, next) => {
   console.log(err.stack);
   let statusCode = err.statusCode || 500;
-  let msg = err.message || "Something went wrong. Try again later";
+  let error = err.message || "Something went wrong. Try again later";
 
   if (err.code && err.code === 11000) {
-    msg = `value entered for ${Object.keys(
+    error = `value entered for ${Object.keys(
       err.keyValue
     )} is already in use. Please pick another one.`;
   }
 
-  return res.status(statusCode).json({ msg });
+  return res.status(statusCode).json({ error });
   return res.status(400).json({ msg: err });
 };
 
