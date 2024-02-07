@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();
 import cookieParser from "cookie-parser";
+import cors from "cors";
 // routes imports
 import authRoutes from "./routes/auth.routes.js";
 import errorHandler from "./middleware/errorHandler.js";
@@ -15,6 +16,7 @@ const port = process.env.PORT || 8000;
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 // routes
 app.use("/api/auth", authRoutes);
 app.get("/api/test", protectRoute, (req, res) => {
