@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
+import { isEmail } from "../utils/utilities.js";
 
 export const signup = async (req, res, next) => {
   try {
@@ -36,22 +37,57 @@ export const signup = async (req, res, next) => {
     if (newUser) {
       generateToken(newUser._id, res);
     }
-    res
-      .status(201)
-      .json({
-        _id: newUser._id,
-        fullName,
-        username,
-        email,
-        gender,
-        profilePic,
-      });
+    res.status(201).json({
+      _id: newUser._id,
+      fullName,
+      username,
+      email,
+      gender,
+      profilePic,
+    });
   } catch (error) {
     next(error);
   }
 };
 
-export const login = async (req, res, next) => {};
+export const login = async (req, res, next) => {
+  try {
+    const { usernameOrMail, password } = req.body;
+    const isMail = isEmail(usernameOrMail);
+
+    let user;
+    if (isMail) {
+      user = await User.findOne({ email: usernameOrMail });
+      if (!user) {
+        user = await User.findOne({ username: usernameOrMail });
+      }
+    } else {
+      user = await User.findOne({ username: usernameOrMail });
+    }
+
+    if (!user) {
+      throw new Error("User does not exist");
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      throw new Error("Invalid Credentials");
+    }
+
+    generateToken(user._id, res);
+
+    res.status(200).json({
+      _id: user._id,
+      fullName: user.fullName,
+      username: user.username,
+      email: user.email,
+      gender: user.gender,
+      profilePic: user.profilePic,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const logout = async (req, res, next) => {
   res.send("logout");
