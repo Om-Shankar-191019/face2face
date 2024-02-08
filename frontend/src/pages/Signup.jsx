@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 // import useSignup from "../hooks/useSignup";
 import background from "../assets/bg-auth.jpg";
 import { MdFace2 } from "react-icons/md";
+import { MdPhotoCamera } from "react-icons/md";
+import { defaultAvatar, generateRandomUsername } from "../utils/constants";
 
 const backGroundImage = {
   background: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${background})`,
@@ -23,6 +25,21 @@ const Signup = () => {
     remember: false,
   });
   console.log(userInput);
+
+  const handleRandomPic = () => {
+    // https://avatar-placeholder.iran.liara.run/
+    // boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
+    // girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
+
+    let randomProfilePic;
+    let randomuser = generateRandomUsername();
+    if (userInput.gender === "male") {
+      randomProfilePic = `https://avatar.iran.liara.run/public/boy?username=${randomuser}`;
+    } else {
+      randomProfilePic = `https://avatar.iran.liara.run/public/girl?username=${randomuser}`;
+    }
+    setUserInput({ ...userInput, profilePic: randomProfilePic });
+  };
 
   const handleUserInputChange = (e) => {
     if (e.target.name === "remember") {
@@ -47,10 +64,57 @@ const Signup = () => {
         </div>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            <h1 className="text-xl  text-center font-bold leading-tight tracking-tight text-themeColor md:text-2xl dark:text-white">
               Create an account
             </h1>
+            {/* image upload ui */}
+            <div className="flex justify-center  ">
+              <div className="relative  ">
+                <img
+                  src={
+                    userInput.profilePic ? userInput.profilePic : defaultAvatar
+                  }
+                  className="h-16 w-16 rounded-full object-cover "
+                />
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2 absolute -bottom-2 right-0 "
+                  htmlFor="userPhoto"
+                >
+                  <div className="text-gray-300 rounded-full bg-white p-1 border border-gray-300 cursor-pointer">
+                    <MdPhotoCamera size={16} />
+                  </div>
+                  <input type="file" id="userPhoto" className="hidden" />
+                </label>
+              </div>
+            </div>
+            <button
+              onClick={handleRandomPic}
+              className="w-full text-white bg-themeColor hover:bg-themeColorHover  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-themeColor dark:hover:bg-themeColorHover  duration-200"
+            >
+              Click to generate a random profile image
+            </button>
+
+            {/* form */}
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+              <div>
+                <label
+                  htmlFor="gender"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Choose your gender
+                </label>
+                <select
+                  name="gender"
+                  id="gender"
+                  value={userInput.gender}
+                  onChange={handleUserInputChange}
+                  className="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sm  text-gray-900 dark:text-white"
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
               <div>
                 <label
                   htmlFor="fullName"
@@ -141,25 +205,6 @@ const Signup = () => {
                   value={userInput.confirmPassword}
                   onChange={handleUserInputChange}
                 />
-              </div>
-              <div>
-                <label
-                  htmlFor="gender"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Choose your gender
-                </label>
-                <select
-                  name="gender"
-                  id="gender"
-                  value={userInput.gender}
-                  onChange={handleUserInputChange}
-                  className="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 text-sm  text-gray-900 dark:text-white"
-                >
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
               </div>
 
               <div className="flex items-center justify-between">
