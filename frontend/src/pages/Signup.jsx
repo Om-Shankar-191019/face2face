@@ -5,6 +5,14 @@ import background from "../assets/bg-auth.jpg";
 import { MdFace2 } from "react-icons/md";
 import { MdPhotoCamera } from "react-icons/md";
 import { defaultAvatar, generateRandomUsername } from "../utils/constants";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { app } from "../firebase";
+import toast from "react-hot-toast";
 
 const backGroundImage = {
   background: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${background})`,
@@ -14,6 +22,8 @@ const backGroundImage = {
 };
 const Signup = () => {
   // const { loading, Signup } = useSignup();
+  const [filePerc, setFilePerc] = useState(null);
+  const [imgUploadLoading, setImgUploadLoading] = useState(false);
   const [userInput, setUserInput] = useState({
     fullName: "",
     username: "",
@@ -25,6 +35,35 @@ const Signup = () => {
     remember: false,
   });
   console.log(userInput);
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    setImgUploadLoading(true);
+    const storage = getStorage(app);
+    const fileName = new Date().getTime() + file.name;
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setFilePerc(Math.round(progress));
+      },
+      (error) => {
+        toast.error(`failed! only upto 4mb image size allowed.`);
+        setImgUploadLoading(false);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setUserInput({ ...userInput, profilePic: downloadURL });
+          // console.log(downloadURL, "from download url");
+          setImgUploadLoading(false);
+        });
+      }
+    );
+  };
 
   const handleRandomPic = () => {
     // https://avatar-placeholder.iran.liara.run/
@@ -83,15 +122,24 @@ const Signup = () => {
                   <div className="text-gray-300 rounded-full bg-white p-1 border border-gray-300 cursor-pointer">
                     <MdPhotoCamera size={16} />
                   </div>
-                  <input type="file" id="userPhoto" className="hidden" />
+                  <input
+                    type="file"
+                    id="userPhoto"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleFileUpload}
+                  />
                 </label>
               </div>
             </div>
             <button
               onClick={handleRandomPic}
+              disabled={imgUploadLoading}
               className="w-full text-white bg-themeColor hover:bg-themeColorHover  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-themeColor dark:hover:bg-themeColorHover  duration-200"
             >
-              Click to generate a random profile image
+              {imgUploadLoading
+                ? "uploading..."
+                : "Click to generate a random profile image"}
             </button>
 
             {/* form */}
@@ -234,7 +282,7 @@ const Signup = () => {
                 type="submit"
                 className="w-full text-white bg-themeColor hover:bg-themeColorHover focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-themeColor dark:hover:bg-themeColorHover dark:focus:ring-primary-800 duration-200"
               >
-                Signup
+                Sign up
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
