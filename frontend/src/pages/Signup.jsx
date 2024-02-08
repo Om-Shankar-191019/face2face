@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import useSignup from "../hooks/useSignup";
+import useSignup from "../hooks/useSignup";
 import background from "../assets/bg-auth.jpg";
 import { MdFace2 } from "react-icons/md";
 import { MdPhotoCamera } from "react-icons/md";
@@ -21,7 +21,7 @@ const backGroundImage = {
   backgroundPosition: "center",
 };
 const Signup = () => {
-  // const { loading, Signup } = useSignup();
+  const { loading, signup } = useSignup();
   const [filePerc, setFilePerc] = useState(null);
   const [imgUploadLoading, setImgUploadLoading] = useState(false);
   const [userInput, setUserInput] = useState({
@@ -34,7 +34,6 @@ const Signup = () => {
     profilePic: "",
     remember: false,
   });
-  console.log(userInput);
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -87,8 +86,7 @@ const Signup = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // await Signup(fullName, password, remember);
+    await signup(userInput);
   };
   return (
     <section

@@ -28,17 +28,17 @@ export const signup = async (req, res, next) => {
 
     // https://avatar-placeholder.iran.liara.run/
 
-    const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
-    const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
+    // const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
+    // const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
-    const randomPic = gender === "male" ? boyProfilePic : girlProfilePic;
+    // const randomPic = gender === "male" ? boyProfilePic : girlProfilePic;
     const newUser = await User.create({
       fullName,
       username,
       email,
       password: hashPassword,
       gender,
-      profilePic: !profilePic ? randomPic : profilePic,
+      profilePic,
     });
 
     if (newUser) {
