@@ -1,7 +1,9 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useAuthContext } from "../context/AuthContext";
 
 const useLogin = () => {
+  const { setAuthUser } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const login = async (usernameOrMail, password, remember) => {
     const success = handleUserInputValidation(usernameOrMail, password);
@@ -15,10 +17,16 @@ const useLogin = () => {
         },
         body: JSON.stringify({ usernameOrMail, password }),
       });
-      const user = await res.json();
-      if (user.error) {
-        throw new Error(user.error);
+
+      const data = await res.json();
+      if (data.error) {
+        throw new Error(data.error);
       }
+
+      if (remember) {
+        localStorage.setItem("f2fAuthUser", JSON.stringify(data));
+      }
+      setAuthUser(data);
     } catch (error) {
       toast.error(error.message);
     } finally {
