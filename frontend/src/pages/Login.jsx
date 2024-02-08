@@ -98,9 +98,14 @@ const Login = () => {
               </div>
               <button
                 type="submit"
+                disabled={loading}
                 className="w-full text-white bg-themeColor hover:bg-themeColorHover focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-themeColor dark:hover:bg-themeColorHover dark:focus:ring-primary-800 duration-150"
               >
-                Sign in
+                {loading ? (
+                  <span className="loading loading-dots loading-md"></span>
+                ) : (
+                  "Sign in"
+                )}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{" "}
