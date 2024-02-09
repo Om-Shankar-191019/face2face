@@ -41,8 +41,9 @@ export const signup = async (req, res, next) => {
       profilePic,
     });
 
+    let tokenExpirationDate;
     if (newUser) {
-      generateToken(newUser._id, res);
+      tokenExpirationDate = generateToken(newUser._id, res);
     }
     res.status(201).json({
       _id: newUser._id,
@@ -51,6 +52,7 @@ export const signup = async (req, res, next) => {
       email,
       gender,
       profilePic,
+      tokenExpirationDate,
     });
   } catch (error) {
     next(error);
@@ -81,7 +83,7 @@ export const login = async (req, res, next) => {
       throw new Error("Invalid Credentials");
     }
 
-    generateToken(user._id, res);
+    const tokenExpirationDate = generateToken(user._id, res);
 
     res.status(200).json({
       _id: user._id,
@@ -90,6 +92,7 @@ export const login = async (req, res, next) => {
       email: user.email,
       gender: user.gender,
       profilePic: user.profilePic,
+      tokenExpirationDate,
     });
   } catch (error) {
     next(error);

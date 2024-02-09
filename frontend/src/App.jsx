@@ -1,27 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./context/AuthContext";
+
 const App = () => {
   const { authUser } = useAuthContext();
+  const [tokenExpiryExist, setTokenExpiryExist] = useState(false);
+
+  useEffect(() => {
+    if (authUser) {
+      const expirationTime = new Date(authUser.tokenExpirationDate).getTime();
+      const currentTime = Date.now();
+      setTokenExpiryExist(expirationTime > currentTime);
+    }
+  }, [authUser]);
 
   return (
     <>
       <Routes>
         <Route
           path="/"
-          element={authUser ? <Home /> : <Navigate to="/login" />}
+          element={tokenExpiryExist ? <Home /> : <Navigate to="/login" />}
         />
         <Route
           path="/login"
-          element={authUser ? <Navigate to="/" /> : <Login />}
+          element={tokenExpiryExist ? <Navigate to="/" /> : <Login />}
         />
         <Route
           path="/signup"
-          element={authUser ? <Navigate to="/" /> : <Signup />}
+          element={tokenExpiryExist ? <Navigate to="/" /> : <Signup />}
         />
       </Routes>
       <Toaster />
