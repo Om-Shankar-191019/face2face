@@ -8,7 +8,9 @@ export const useAuthContext = () => {
 
 export const AuthContextProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(
-    JSON.parse(localStorage.getItem("f2fAuthUser")) || null
+    JSON.parse(localStorage.getItem("f2fAuthUser")) ||
+      JSON.parse(sessionStorage.getItem("f2fAuthUser")) ||
+      null
   );
 
   return (

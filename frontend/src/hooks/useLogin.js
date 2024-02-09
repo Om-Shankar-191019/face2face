@@ -25,6 +25,8 @@ const useLogin = () => {
 
       if (remember) {
         localStorage.setItem("f2fAuthUser", JSON.stringify(data));
+      } else {
+        sessionStorage.setItem("f2fAuthUser", JSON.stringify(data));
       }
       setAuthUser(data);
     } catch (error) {
