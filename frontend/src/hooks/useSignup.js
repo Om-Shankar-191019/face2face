@@ -64,7 +64,7 @@ const handleInputValidation = (userInput) => {
   }
 
   if (password.length < 6) {
-    toast.error("Password must be atleast 6 characters");
+    toast.error("Password must be atleast 6 characters.");
     return false;
   }
   return true;
