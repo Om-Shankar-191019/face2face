@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 // routes imports
 import authRoutes from "./routes/auth.routes.js";
+import messageRoutes from "./routes/message.routes.js";
 import errorHandler from "./middleware/errorHandler.js";
 import protectRoute from "./middleware/protectRoute.js";
 
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use(cors());
 // routes
 app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
 app.get("/api/test", protectRoute, (req, res) => {
   res.json({ msg: req.user });
 });
