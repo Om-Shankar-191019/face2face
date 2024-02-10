@@ -34,3 +34,25 @@ export const sendMessage = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getMessages = async (req, res, next) => {
+  try {
+    const { id: userToChatWithId } = req.params;
+    const senderId = req.user._id;
+
+    const conversation = await Conversation.findOne({
+      participants: [senderId, userToChatWithId],
+    }).populate("messages"); // not reference but the actual messages array
+
+    let messages = [];
+    if (!conversation) {
+      messages = [];
+    } else {
+      messages = conversation.messages;
+    }
+
+    res.status(200).json(messages);
+  } catch (error) {
+    next(error);
+  }
+};
