@@ -8,6 +8,7 @@ import cors from "cors";
 // routes imports
 import authRoutes from "./routes/auth.routes.js";
 import messageRoutes from "./routes/message.routes.js";
+import userRoutes from "./routes/user.routes.js";
 import errorHandler from "./middleware/errorHandler.js";
 import protectRoute from "./middleware/protectRoute.js";
 
@@ -21,6 +22,7 @@ app.use(cors());
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/users", userRoutes);
 app.get("/api/test", protectRoute, (req, res) => {
   res.json({ msg: req.user });
 });

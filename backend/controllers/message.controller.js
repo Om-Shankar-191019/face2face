@@ -12,7 +12,7 @@ export const sendMessage = async (req, res, next) => {
     });
     if (!conversation) {
       conversation = await Conversation.create({
-        participants: [senderId, receiverId],
+        participants: { $all: [senderId, receiverId] },
       });
     }
 
@@ -41,7 +41,7 @@ export const getMessages = async (req, res, next) => {
     const senderId = req.user._id;
 
     const conversation = await Conversation.findOne({
-      participants: [senderId, userToChatWithId],
+      participants: { $all: [senderId, userToChatWithId] },
     }).populate("messages"); // not reference but the actual messages array
 
     let messages = [];
