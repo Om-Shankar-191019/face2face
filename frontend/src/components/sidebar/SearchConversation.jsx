@@ -5,16 +5,22 @@ const SearchConversation = () => {
 
   const handleSubmit = () => {};
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="flex items-center gap-2 my-2  border-b-2 border-themeColor "
+    >
       <input
         type="text"
         placeholder="Search…"
-        className="input input-bordered rounded-full"
+        className=" text-md py-2 px-2 w-full outline-none"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <button type="submit" className="btn btn-circle bg-sky-500 text-white">
-        <IoSearchSharp className="w-6 h-6 outline-none" />
+      <button
+        type="submit"
+        className="p-2 rounded-full bg-themeColor text-white hover:bg-themeColorHover "
+      >
+        <IoSearchSharp className="w-4 h-4 outline-none" />
       </button>
     </form>
   );

@@ -7,9 +7,7 @@ const Conversation = ({ user, lastIndex }) => {
   return (
     <>
       <div
-        className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer
-				
-			`}
+        className={`flex gap-2 items-center hover:bg-themeColor rounded hover:text-white px-2 py-2 cursor-pointer	`}
       >
         <div className={`avatar `}>
           <div className="w-12 rounded-full">
@@ -22,8 +20,11 @@ const Conversation = ({ user, lastIndex }) => {
 
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
-            <p className="font-bold text-gray-200">{fullName}</p>
-            <span className="text-xl">12:34 am</span>
+            <div>
+              <p className="font-semibold text-sm ">{fullName}</p>
+              <p className="text-[10px] text-themeColorHover ">{username}</p>
+            </div>
+            <span className="text-xs ">12:34 am</span>
           </div>
         </div>
       </div>
