@@ -11,3 +11,15 @@ export const getUsers = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getSearchedUsers = async (req, res, next) => {
+  try {
+    const searchTerm = req.query.searchTerm || "";
+    const users = await User.find({
+      fullName: { $regex: searchTerm, $options: "i" },
+    }).select("-password");
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
+};
