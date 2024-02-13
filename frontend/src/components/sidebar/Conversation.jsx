@@ -11,7 +11,7 @@ const Conversation = ({ user, lastIndex }) => {
   return (
     <>
       <div
-        onClick={() => dispatch(setSelectedConversationReducer(_id))}
+        onClick={() => dispatch(setSelectedConversationReducer(user))}
         className={`flex gap-2 items-center hover:bg-themeColor rounded hover:text-white px-2 py-2 cursor-pointer	`}
       >
         <div className={`avatar `}>

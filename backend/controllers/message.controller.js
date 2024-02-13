@@ -8,11 +8,11 @@ export const sendMessage = async (req, res, next) => {
     const { message } = req.body;
 
     let conversation = await Conversation.findOne({
-      participants: [senderId, receiverId],
+      participants: { $all: [senderId, receiverId] },
     });
     if (!conversation) {
       conversation = await Conversation.create({
-        participants: { $all: [senderId, receiverId] },
+        participants: [senderId, receiverId],
       });
     }
 
