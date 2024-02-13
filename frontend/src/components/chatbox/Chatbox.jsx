@@ -1,11 +1,26 @@
 import React from "react";
 import MessageList from "./MessageList";
+import ChatboxHeader from "./ChatboxHeader";
+import { useSelector } from "react-redux";
+import WelcomeChatbox from "./WelcomeChatbox";
 
 const Chatbox = () => {
+  const { selectedConversation } = useSelector((state) => state.chat);
+
   return (
-    <div className="h-screen w-full border-2 border-red-600 sm:flex sm:flex-1 flex-col">
-      <MessageList />
-    </div>
+    <>
+      {selectedConversation ? (
+        <div className="h-screen w-full  sm:flex sm:flex-1 flex-col">
+          <ChatboxHeader
+            profilePic={selectedConversation.profilePic}
+            fullName={selectedConversation.fullName}
+          />
+          <MessageList />
+        </div>
+      ) : (
+        <WelcomeChatbox />
+      )}
+    </>
   );
 };
 
