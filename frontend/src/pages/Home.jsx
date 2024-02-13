@@ -23,7 +23,7 @@ const Home = () => {
   }, []);
   return (
     <div className="flex flex-col sm:flex-row h-screen  ">
-      <Options />
+      {/* <Options /> */}
       {isMobile && selectedConversation ? <Chatbox /> : <Sidebar />}
       {!isMobile && <Chatbox />}
     </div>

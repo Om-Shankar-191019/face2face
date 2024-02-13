@@ -7,7 +7,7 @@ const MessageList = () => {
   const { loading, messages } = useGetMessages();
 
   return (
-    <div className="bg-gray-200 flex-1 px-2 py-4">
+    <div className="bg-gray-200 flex-1 px-2 py-4 overflow-scroll">
       {messages.map((item, index) => (
         <Message key={item._id} messageItem={item} />
       ))}
