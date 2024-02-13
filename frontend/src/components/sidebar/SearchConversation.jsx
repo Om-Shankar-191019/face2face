@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
+import { IoCloseSharp } from "react-icons/io5";
+import useSearchUsers from "../../hooks/useSearchUsers";
 const SearchConversation = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { loading, getSearches } = useSearchUsers();
 
-  const handleSubmit = () => {};
+  const handleClearSearch = async () => {
+    setSearchTerm("");
+    await getSearches("");
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await getSearches(searchTerm);
+  };
   return (
     <form
       onSubmit={handleSubmit}
@@ -22,6 +32,15 @@ const SearchConversation = () => {
       >
         <IoSearchSharp className="w-4 h-4 outline-none" />
       </button>
+      {searchTerm.length > 0 && (
+        <button
+          type="button"
+          className="p-2 rounded-full bg-themeColor text-white hover:bg-themeColorHover "
+          onClick={handleClearSearch}
+        >
+          <IoCloseSharp className="w-4 h-4 outline-none" />
+        </button>
+      )}
     </form>
   );
 };

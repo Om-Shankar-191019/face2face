@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { setConversationsReducer } from "../redux/slices/chatSlice";
 
 const useGetAllUsers = () => {
   const [loading, setLoading] = useState(false);
-  const [allUsers, setAllUsers] = useState([]);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const getAllUsers = async () => {
       setLoading(true);
@@ -13,7 +16,7 @@ const useGetAllUsers = () => {
         if (data.error) {
           throw new Error(data.error);
         }
-        setAllUsers(data);
+        dispatch(setConversationsReducer(data));
       } catch (error) {
         toast.error(error.message);
       } finally {
@@ -24,7 +27,7 @@ const useGetAllUsers = () => {
     getAllUsers();
   }, []);
 
-  return { loading, allUsers };
+  return { loading };
 };
 
 export default useGetAllUsers;

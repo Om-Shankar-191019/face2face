@@ -5,10 +5,14 @@ const chatSlice = createSlice({
   initialState: {
     messages: [],
     selectedConversation: null,
+    conversations: [],
   },
   reducers: {
     setMessagesReducer(state, action) {
       state.messages = [...action.payload];
+    },
+    setConversationsReducer(state, action) {
+      state.conversations = [...action.payload];
     },
     setSelectedConversationReducer(state, action) {
       state.selectedConversation = action.payload;
@@ -16,6 +20,9 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setMessagesReducer, setSelectedConversationReducer } =
-  chatSlice.actions;
+export const {
+  setMessagesReducer,
+  setSelectedConversationReducer,
+  setConversationsReducer,
+} = chatSlice.actions;
 export default chatSlice.reducer;

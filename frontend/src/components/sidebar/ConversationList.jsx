@@ -1,18 +1,16 @@
 import React from "react";
 import useGetAllUsers from "../../hooks/useGetAllUsers";
 import Conversation from "./Conversation";
+import { useSelector } from "react-redux";
 
 const ConversationList = () => {
-  const { loading, allUsers } = useGetAllUsers();
+  const { loading } = useGetAllUsers();
+  const { conversations } = useSelector((state) => state.chat);
 
   return (
     <div>
-      {allUsers.map((user, index) => (
-        <Conversation
-          key={user._id}
-          user={user}
-          lastIndex={index === allUsers.length - 1}
-        />
+      {conversations.map((user, index) => (
+        <Conversation key={user._id} user={user} />
       ))}
     </div>
   );

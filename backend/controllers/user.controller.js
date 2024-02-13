@@ -15,8 +15,10 @@ export const getUsers = async (req, res, next) => {
 export const getSearchedUsers = async (req, res, next) => {
   try {
     const searchTerm = req.query.searchTerm || "";
+    const loggedInUserId = req.user._id;
     const users = await User.find({
       fullName: { $regex: searchTerm, $options: "i" },
+      _id: { $ne: loggedInUserId },
     }).select("-password");
     res.status(200).json(users);
   } catch (error) {
