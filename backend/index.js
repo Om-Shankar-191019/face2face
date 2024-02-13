@@ -11,8 +11,8 @@ import messageRoutes from "./routes/message.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import errorHandler from "./middleware/errorHandler.js";
 import protectRoute from "./middleware/protectRoute.js";
-
-const app = express();
+import { app, server } from "./socket/socket.js";
+// const app = express();
 const port = process.env.PORT || 8000;
 
 // middlewares
@@ -31,7 +31,7 @@ app.use(errorHandler);
 const start = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    app.listen(port, () => {
+    server.listen(port, () => {
       console.log(`Server is running on port ${port}...`);
     });
   } catch (error) {
