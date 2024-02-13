@@ -2,6 +2,7 @@ import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { setSelectedConversationReducer } from "../../redux/slices/chatSlice";
+import { defaultAvatar } from "../../utils/constants";
 const ChatboxHeader = ({ fullName, profilePic }) => {
   const dispatch = useDispatch();
 
@@ -15,7 +16,10 @@ const ChatboxHeader = ({ fullName, profilePic }) => {
       />
       <div className={`avatar `}>
         <div className="w-10 rounded-full">
-          <img src={profilePic} alt="user avatar" />
+          <img
+            src={profilePic ? profilePic : defaultAvatar}
+            alt="user avatar"
+          />
         </div>
       </div>
 
@@ -27,7 +31,7 @@ const ChatboxHeader = ({ fullName, profilePic }) => {
             </p>
             <p className="text-[10px] text-themeColorHover ">status</p>
           </div>
-          <span className="text-xs ">options</span>
+          {/* <span className="text-xs ">options</span> */}
         </div>
       </div>
     </div>

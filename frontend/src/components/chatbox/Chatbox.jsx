@@ -3,6 +3,7 @@ import MessageList from "./MessageList";
 import ChatboxHeader from "./ChatboxHeader";
 import { useSelector } from "react-redux";
 import WelcomeChatbox from "./WelcomeChatbox";
+import MessageInput from "./MessageInput";
 
 const Chatbox = () => {
   const { selectedConversation } = useSelector((state) => state.chat);
@@ -10,12 +11,13 @@ const Chatbox = () => {
   return (
     <>
       {selectedConversation ? (
-        <div className="h-screen w-full  sm:flex sm:flex-1 flex-col">
+        <div className="h-screen w-full  flex sm:flex-1 flex-col justify-between">
           <ChatboxHeader
             profilePic={selectedConversation.profilePic}
             fullName={selectedConversation.fullName}
           />
           <MessageList />
+          <MessageInput />
         </div>
       ) : (
         <WelcomeChatbox />
