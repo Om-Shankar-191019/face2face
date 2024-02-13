@@ -1,12 +1,20 @@
 import React from "react";
-
+import { IoIosArrowBack } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { setSelectedConversationReducer } from "../../redux/slices/chatSlice";
 const ChatboxHeader = ({ fullName, profilePic }) => {
+  const dispatch = useDispatch();
+
   return (
     <div
-      className={`flex gap-2 items-center hover:bg-themeColor rounded hover:text-white px-2 py-2 cursor-pointer	`}
+      className={`flex gap-2 items-center    px-2 py-2 cursor-pointer bg-themeColor sm:bg-white	`}
     >
+      <IoIosArrowBack
+        onClick={() => dispatch(setSelectedConversationReducer(null))}
+        className="flex sm:hidden text-2xl text-white sm:text-black"
+      />
       <div className={`avatar `}>
-        <div className="w-12 rounded-full">
+        <div className="w-10 rounded-full">
           <img src={profilePic} alt="user avatar" />
         </div>
       </div>
@@ -14,7 +22,9 @@ const ChatboxHeader = ({ fullName, profilePic }) => {
       <div className="flex flex-col flex-1">
         <div className="flex gap-3 justify-between">
           <div>
-            <p className="font-semibold text-sm ">{fullName}</p>
+            <p className="font-semibold text-sm text-white sm:text-black">
+              {fullName}
+            </p>
             <p className="text-[10px] text-themeColorHover ">status</p>
           </div>
           <span className="text-xs ">options</span>

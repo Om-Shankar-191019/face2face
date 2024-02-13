@@ -15,7 +15,7 @@ const Conversation = ({ user, lastIndex }) => {
         className={`flex gap-2 items-center hover:bg-themeColor rounded hover:text-white px-2 py-2 cursor-pointer	`}
       >
         <div className={`avatar `}>
-          <div className="w-12 rounded-full">
+          <div className="w-10 rounded-full">
             <img
               src={profilePic ? profilePic : defaultAvatar}
               alt="user avatar"

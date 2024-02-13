@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
 import Chatbox from "../components/chatbox/Chatbox";
 import Options from "../components/options/Options";
+import { useSelector } from "react-redux";
 
-// const isMobile = window.innerWidth < 640;
-const selectedUser = false;
 const Home = () => {
   const [isMobile, setIsMobile] = useState(false);
-  // console.log(isMobile);
+  const { selectedConversation } = useSelector((state) => state.chat);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 640); // Change breakpoint as needed
@@ -25,7 +24,7 @@ const Home = () => {
   return (
     <div className="flex flex-col sm:flex-row h-screen  ">
       <Options />
-      {isMobile && selectedUser ? <Chatbox /> : <Sidebar />}
+      {isMobile && selectedConversation ? <Chatbox /> : <Sidebar />}
       {!isMobile && <Chatbox />}
     </div>
   );
