@@ -1,12 +1,17 @@
 import React from "react";
 import { defaultAvatar } from "../../utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedConversationReducer } from "../../redux/slices/chatSlice";
 
 const Conversation = ({ user, lastIndex }) => {
-  const { profilePic, fullName, username } = user;
-  const isSelected = false;
+  const dispatch = useDispatch();
+
+  const { profilePic, fullName, username, _id } = user;
+
   return (
     <>
       <div
+        onClick={() => dispatch(setSelectedConversationReducer(_id))}
         className={`flex gap-2 items-center hover:bg-themeColor rounded hover:text-white px-2 py-2 cursor-pointer	`}
       >
         <div className={`avatar `}>
