@@ -5,14 +5,17 @@ import { setSelectedConversationReducer } from "../../redux/slices/chatSlice";
 
 const Conversation = ({ user, lastIndex }) => {
   const dispatch = useDispatch();
-
+  const { selectedConversation } = useSelector((state) => state.chat);
   const { profilePic, fullName, username, _id } = user;
+  const currentUserFlag = selectedConversation?._id === _id;
 
   return (
     <>
       <div
         onClick={() => dispatch(setSelectedConversationReducer(user))}
-        className={`flex gap-2 items-center hover:bg-themeColor rounded hover:text-white px-2 py-2 cursor-pointer	`}
+        className={`flex gap-2 items-center hover:bg-themeColor rounded hover:text-white ${
+          currentUserFlag && "bg-themeColor text-white"
+        } px-2 py-2 cursor-pointer	`}
       >
         <div className={`avatar `}>
           <div className="w-10 rounded-full">

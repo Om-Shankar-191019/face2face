@@ -24,7 +24,11 @@ const MessageInput = () => {
           type="submit"
           className="absolute inset-y-0 end-0 flex items-center pe-3"
         >
-          <BsSend className="text-themeColor" />
+          {loading ? (
+            <span className="loading loading-dots loading-md text-themeColor"></span>
+          ) : (
+            <BsSend className="text-themeColor" />
+          )}
         </button>
       </div>
     </form>

@@ -1,16 +1,27 @@
 import React from "react";
 import useGetMessages from "../../hooks/useGetMessages";
-import bgChatboxImage from "../../assets/bg-chatbox.png";
 import Message from "./Message";
+import MessageSkeleton from "../skeletons/MessageSkeleton";
 
 const MessageList = () => {
   const { loading, messages } = useGetMessages();
 
   return (
-    <div className="bg-gray-200 flex-1 px-2 py-4 overflow-scroll">
-      {messages.map((item, index) => (
-        <Message key={item._id} messageItem={item} />
-      ))}
+    <div className="bg-gray-200 flex-1 px-2 py-4 overflow-auto">
+      {loading &&
+        [...Array(4)].map((_, index) => (
+          <MessageSkeleton key={`msgSkeleton - ${index}`} />
+        ))}
+
+      {!loading &&
+        messages.length > 0 &&
+        messages.map((item) => <Message key={item._id} messageItem={item} />)}
+
+      {!loading && messages.length === 0 && (
+        <p className="text-center text-gray-400">
+          Send a message to start the conversation
+        </p>
+      )}
     </div>
   );
 };
