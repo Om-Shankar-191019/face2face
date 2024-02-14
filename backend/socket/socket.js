@@ -11,11 +11,19 @@ const io = new Server(server, {
   },
 });
 
+let connectedUsersMap = {};
 io.on("connection", (socket) => {
   console.log(" a user connected ", socket.id);
 
+  const userId = socket.handshake.query.userId;
+  if (userId !== undefined) connectedUsersMap[userId] = socket.id;
+
+  io.emit("getOnlineUsers", Object.keys(connectedUsersMap));
+
   socket.on("disconnect", () => {
     console.log("user disconnected", socket.id);
+    delete connectedUsersMap[userId];
+    io.emit("getOnlineUsers", Object.keys(connectedUsersMap));
   });
 });
 
