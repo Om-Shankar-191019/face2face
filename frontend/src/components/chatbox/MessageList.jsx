@@ -2,9 +2,12 @@ import React from "react";
 import useGetMessages from "../../hooks/useGetMessages";
 import Message from "./Message";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
+import useListenMessage from "../../hooks/useListenMessage";
 
 const MessageList = () => {
   const { loading, messages } = useGetMessages();
+
+  useListenMessage();
 
   return (
     <div className="bg-gray-200 flex-1 px-2 py-4 overflow-auto">

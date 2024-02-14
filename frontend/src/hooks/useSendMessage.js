@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setMessagesReducer } from "../redux/slices/chatSlice";
 
 const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
   const { selectedConversation } = useSelector((state) => state.chat);
+  const { messages } = useSelector((state) => state.chat);
+  const dispatch = useDispatch();
+
   const sendMessage = async (message) => {
     if (message.length === 0) return;
     setLoading(true);
@@ -24,7 +28,7 @@ const useSendMessage = () => {
         throw new Error(data.error);
       }
 
-      console.log(data);
+      dispatch(setMessagesReducer([...messages, data]));
     } catch (error) {
       toast.error(error.message);
     } finally {
