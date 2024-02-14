@@ -3,8 +3,12 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { setSelectedConversationReducer } from "../../redux/slices/chatSlice";
 import { defaultAvatar } from "../../utils/constants";
-const ChatboxHeader = ({ fullName, profilePic }) => {
+import { useSocketContext } from "../../context/SocketContext";
+
+const ChatboxHeader = ({ fullName, profilePic, userId }) => {
   const dispatch = useDispatch();
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers.includes(userId);
 
   return (
     <div
@@ -29,7 +33,9 @@ const ChatboxHeader = ({ fullName, profilePic }) => {
             <p className="font-semibold text-sm text-white sm:text-black">
               {fullName}
             </p>
-            <p className="text-[10px] text-themeColorHover ">status</p>
+            {isOnline && (
+              <p className="text-[10px] text-themeColorHover ">online</p>
+            )}
           </div>
           {/* <span className="text-xs ">options</span> */}
         </div>

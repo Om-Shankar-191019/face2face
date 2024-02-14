@@ -13,7 +13,7 @@ const SocketContextProvider = ({ children }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const { authUser } = useAuthContext();
 
-  console.log("online : ", onlineUsers);
+  // console.log("online : ", onlineUsers);
 
   useEffect(() => {
     if (authUser) {

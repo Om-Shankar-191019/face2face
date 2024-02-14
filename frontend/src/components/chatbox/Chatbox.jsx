@@ -15,6 +15,7 @@ const Chatbox = () => {
           <ChatboxHeader
             profilePic={selectedConversation.profilePic}
             fullName={selectedConversation.fullName}
+            userId={selectedConversation._id}
           />
           <MessageList />
           <MessageInput />

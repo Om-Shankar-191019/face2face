@@ -2,12 +2,15 @@ import React from "react";
 import { defaultAvatar } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedConversationReducer } from "../../redux/slices/chatSlice";
+import { useSocketContext } from "../../context/SocketContext";
 
 const Conversation = ({ user, lastIndex }) => {
   const dispatch = useDispatch();
   const { selectedConversation } = useSelector((state) => state.chat);
   const { profilePic, fullName, username, _id } = user;
   const currentUserFlag = selectedConversation?._id === _id;
+  const { onlineUsers } = useSocketContext();
+  const isOnline = onlineUsers.includes(_id);
 
   return (
     <>
@@ -17,7 +20,7 @@ const Conversation = ({ user, lastIndex }) => {
           currentUserFlag && "bg-themeColor text-white"
         } px-2 py-2 cursor-pointer	`}
       >
-        <div className={`avatar `}>
+        <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div className="w-10 rounded-full">
             <img
               src={profilePic ? profilePic : defaultAvatar}
