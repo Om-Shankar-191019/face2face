@@ -13,6 +13,7 @@ const Message = ({ messageItem }) => {
     ? authUser.profilePic
     : selectedConversation.profilePic;
   const formatTime = extractTime(messageItem.createdAt);
+  const shakeClass = messageItem.shouldShake ? "shake" : "";
 
   return (
     <div className={`chat ${cornerMessageClass} `}>
@@ -27,7 +28,7 @@ const Message = ({ messageItem }) => {
       <div
         className={`chat-bubble ${
           itsMe ? "bg-themeColor text-white" : "bg-white text-gray-600"
-        }  pb-2`}
+        } ${shakeClass} pb-2`}
       >
         {messageItem.message}
       </div>
