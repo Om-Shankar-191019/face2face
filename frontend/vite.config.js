@@ -6,9 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": {
-        target: "https://backend-face2face.onrender.com",
-      },
+      "/api": "https://backend-face2face.onrender.com",
     },
   },
 });
