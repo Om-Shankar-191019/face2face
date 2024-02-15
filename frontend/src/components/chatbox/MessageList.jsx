@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import useGetMessages from "../../hooks/useGetMessages";
 import Message from "./Message";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
@@ -9,6 +9,13 @@ const MessageList = () => {
   const { loading, messages } = useGetMessages();
   useListenMessage();
   const { selectedConversation } = useSelector((state) => state.chat);
+  const lastMessageRef = useRef();
+
+  useEffect(() => {
+    setTimeout(() => {
+      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }, [messages]);
 
   return (
     <div className="bg-gray-200 flex-1 px-2 py-4 overflow-auto">
@@ -24,7 +31,12 @@ const MessageList = () => {
             item.receiverId === selectedConversation._id ||
             item.senderId === selectedConversation._id
           ) {
-            return <Message key={item._id} messageItem={item} />;
+            return (
+              <div key={item._id} ref={lastMessageRef}>
+                {" "}
+                <Message messageItem={item} />
+              </div>
+            );
           }
         })}
 
