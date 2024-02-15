@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["https://vercel.com/om-shankars-projects/face2face"],
+    origin: ["https://face2face-iota.vercel.app"],
     methods: ["GET", "POST"],
   },
 });
