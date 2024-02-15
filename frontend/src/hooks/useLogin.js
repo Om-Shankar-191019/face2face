@@ -10,13 +10,16 @@ const useLogin = () => {
     if (!success) return;
     setLoading(true);
     try {
-      const res = await fetch(`${VITE_APP_SERVER_DOMAIN}/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ usernameOrMail, password }),
-      });
+      const res = await fetch(
+        `${process.env.VITE_APP_SERVER_DOMAIN}/api/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ usernameOrMail, password }),
+        }
+      );
 
       const data = await res.json();
       if (data.error) {
