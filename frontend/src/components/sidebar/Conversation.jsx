@@ -35,7 +35,7 @@ const Conversation = ({ user, lastIndex }) => {
               <p className="font-semibold text-sm ">{fullName}</p>
               <p className="text-[10px] text-themeColorHover ">{username}</p>
             </div>
-            <span className="text-xs ">12:34 am</span>
+            {/* <span className="text-xs ">12:34 am</span> */}
           </div>
         </div>
       </div>
