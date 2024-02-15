@@ -23,15 +23,21 @@ const App = () => {
       <Routes>
         <Route
           path="/"
-          element={tokenExpiryExist ? <Home /> : <Navigate to="/login" />}
+          element={
+            authUser && tokenExpiryExist ? <Home /> : <Navigate to="/login" />
+          }
         />
         <Route
           path="/login"
-          element={tokenExpiryExist ? <Navigate to="/" /> : <Login />}
+          element={
+            authUser && tokenExpiryExist ? <Navigate to="/" /> : <Login />
+          }
         />
         <Route
           path="/signup"
-          element={tokenExpiryExist ? <Navigate to="/" /> : <Signup />}
+          element={
+            authUser && tokenExpiryExist ? <Navigate to="/" /> : <Signup />
+          }
         />
       </Routes>
       <Toaster />
