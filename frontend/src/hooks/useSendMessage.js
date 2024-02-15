@@ -13,7 +13,9 @@ const useSendMessage = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `/api/messages/send/${selectedConversation._id}`,
+        `${import.meta.env.VITE_APP_SERVER_DOMAIN}/api/messages/send/${
+          selectedConversation._id
+        }`,
         {
           method: "POST",
           headers: {

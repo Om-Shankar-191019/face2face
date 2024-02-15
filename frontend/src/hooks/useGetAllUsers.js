@@ -11,7 +11,9 @@ const useGetAllUsers = () => {
     const getAllUsers = async () => {
       setLoading(true);
       try {
-        const res = await fetch("/api/users");
+        const res = await fetch(
+          `${import.meta.env.VITE_APP_SERVER_DOMAIN}/api/users`
+        );
         const data = await res.json();
         if (data.error) {
           throw new Error(data.error);

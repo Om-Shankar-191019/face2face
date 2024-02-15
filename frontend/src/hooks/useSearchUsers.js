@@ -10,7 +10,11 @@ const useSearchUsers = () => {
   const getSearches = async (searchTerm) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/users/search?searchTerm=${searchTerm}`);
+      const res = await fetch(
+        `${
+          import.meta.env.VITE_APP_SERVER_DOMAIN
+        }/api/users/search?searchTerm=${searchTerm}`
+      );
       const data = await res.json();
       if (data.error) {
         throw new Error(data.error);
